@@ -1,0 +1,160 @@
+/* Root Content (var color scheme) */
+:root {
+  --light-color: lightgrey;
+  --dark-color: maroon; 
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  background-color: var(--light-color);
+  margin-bottom: 20px;
+  font-size: 25px;
+  width: 100%;
+  height: 25px;
+}
+
+/* Header Flow */
+header {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  width: 100%;
+  padding: 25px;
+  font-size: 24px;  
+}
+
+.highscoreBtn {
+  font-size: 20px;
+  font-weight: bold;
+  border: 4px solid var(--dark-color);
+  border-radius: 24px;
+  padding: 14px 34px;
+  margin: 16px 16px 16px 20px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px 0px rgba(0, 0, 0, 0.2) 0px 1px 1px
+  0px;
+  line-height: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.highscoreBtn:hover {
+color: var(--light-color);
+background-color: var(--dark-color);
+transition: all 250ms ease;
+}
+
+.timer {
+  font-size: 24px;
+  margin-right: 16px;
+  margin-left: auto;
+  color: var(--dark-color);
+}
+
+/* Main Flow */
+main {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 50%;
+}
+
+main p {
+  font-size: 1.5rem;
+}
+
+main h1 {
+  font-size: 50px;
+}
+
+.home {
+  display: static;
+}
+
+.home p {
+  margin: 30px;
+}
+
+.container {
+  margin: auto;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+}
+
+.home {
+  margin-bottom: 20px;
+}
+
+.startBtn {
+  font-size: 20px;
+  font-weight: bold;
+  border: 4px solid var(--dark-color);
+  border-radius: 24px;
+  padding: 14px 34px;
+  margin: 16px 16px 16px 20px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px 0px rgba(0, 0, 0, 0.2) 0px 1px 1px
+  0px;
+  line-height: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.startBtn:hover {
+  color: var(--light-color);
+  background-color: var(--dark-color);
+  transition: all 250ms ease;
+  }
+
+
+
+
+
+
+
+
+
+
+/* Set media query for different viewport sizes*/
+  @media (max-width: 690px) {
+    .startBtn {
+      font-size: 1rem;
+      margin: 16px 0px 0px 0px;
+      padding: 10px 15px;
+    }
+  
+    #startButton {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 500px) {
+    .startBtn {
+      font-size: 0.8rem;
+    }
+  }
+
+  @media (max-width: 690px) {
+    .highscoreBtn {
+      font-size: 1rem;
+      margin: 16px 0px 0px 0px;
+      padding: 10px 15px;
+    }
+  
+    #highscoreButton {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 500px) {
+    .highscoreBtn {
+      font-size: 0.8rem;
+    }
+  }

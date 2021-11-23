@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Quiz</title>
+  <link rel="reset" href="assets/css/reset.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+
+<body>
+  <!-- Insert header containing high score button and 60sec countdown timer -->
+  <header>
+    <button class="highscoreBtn" id="highscoreButton">View High Scores</button>
+    <h3 class="timer" id="countdown">Timer: 60</h3>
+  </header>
+
+  <main>
+    <!-- "Home" Screen. Insert container to nest the game welcome, quiz starter info, and start quiz button -->
+    <div class="container">
+      <h1 class="home" id="homePage">Code Quiz Challenge!</h1>
+      <p>
+        Ready? Try your best to answer as many coding questions as you can in 60 seconds! If you answer
+        incorrectly,
+        time is the price you pay. So think fast - and good luck!
+      </p>
+      <button class="startBtn" id="startButton">Start Quiz</button>
+    </div>
+
+    <!-- "Gameplay" Screen -->
+    <section>
+      <div class="gameplay" id="gamePlay"></div>
+      <div class="questions" id="questions"></div>
+      <div class="answers" id="answers"></div>
+    </section>
+
+    <!-- "Game Over" Screen -->
+    <section>
+      <div class="gameover" id="gameOver"></div>
+      <div class="end" id="endResult"></div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
