@@ -7,6 +7,7 @@ html, * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  flex-wrap: wrap;
 }
 
 body {
@@ -34,7 +35,7 @@ main p {
 }
 
 main h1 {
-  font-size: 50px;
+  font-size: 60px;
 }
 
 header {
@@ -84,7 +85,7 @@ transition: all 250ms ease;
 }
 
 .timer {
-  font-size: 24px;
+  font-size: 30px;
   padding: 25px;
   margin-right: 16px;
   margin-left: auto;
