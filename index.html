@@ -11,14 +11,13 @@
 </head>
 
 <body>
-  <!-- Insert header containing high score button and 60sec countdown timer -->
   <header>
-    <button class="highscoreBtn" id="highscoreButton">View High Scores</button>
+    <button class="highscoreBtn" id="highscoreButton"><a href="highscores.html">View High Scores</a>
+    </button>
     <h3 class="timer" id="countdown">Timer: 60</h3>
   </header>
 
   <main>
-    <!-- "Home" Screen. Insert container to nest the game welcome, quiz starter info, and start quiz button -->
     <div class="container">
       <h1 class="home" id="homePage">Code Quiz Challenge!</h1>
       <p>
@@ -38,6 +37,11 @@
 
     <!-- "Game Over" Screen -->
     <section>
+      <h1>Submit High Score</h1>
+      <form id="score-form">
+        <label for="initals">Initials:</label>
+        <input maxlength="3" type="text" id="initials" name="initials" />
+      </form>
       <div class="gameover" id="gameOver"></div>
       <div class="end" id="endResult"></div>
     </section>
