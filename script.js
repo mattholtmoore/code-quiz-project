@@ -16,7 +16,7 @@ var highscoreList = document.getElementById('highscore-list');
 var initialsInput = document.getElementById('initials');
 
 
-// Variable declarations
+// Variable declarations and questions list. (Collapse questionsList for better visibility).
 var questionsList = [
   {
     question: 'What does HTML stand for?',
@@ -148,6 +148,51 @@ var questionsList = [
     answer: ['variable carName;', 'v carName;', 'var dec = (carName);', 'var carName;'],
     correctAnswer: 3
   },
+  {
+    question: 'How does a "for" loop start?',
+    answer: ['for (i = 0; i <= 5)', 'for (i = 0; i <= 5; i++)', 'for i = 1 to 5', 'for (i <= 5; i++)'],
+    correctAnswer: 1
+  },
+  {
+    question: 'In JavaScript, the symbols + - * and / are:',
+    answer: ['operators', 'expressions', 'comparison operators', 'None of the above'],
+    correctAnswer: 0
+  },
+  {
+    question: 'In JavaScript, the expression x!=y returns false if:',
+    answer: ['the variables are equal', 'x is less than y', 'the variables are not equal', 'None of the above'],
+    correctAnswer:  0
+  },
+  {
+    question: 'In JavaScript, which of the following is a logical operator?',
+    answer: ['|', '&&', '%', '/'],
+    correctAnswer: 1
+  },
+  {
+    question: 'Alert(message), close() and reset() are JavaScript:',
+    answer: ['Objects', 'Methods', 'Properties', 'commands'],
+    correctAnswer: 1
+  },
+  {
+    question: "When you want to use JavaScript to manipulate the currently displayed Web page, the Web page's JavaScript object name is:",
+    answer: ['Frame', 'Document', 'Window', 'browser_window'],
+    correctAnswer: 1
+  },
+  {
+    question: 'In JavaScript, which of the following is NOT an assignment operator?',
+    answer: ['+=', '||', '*=', '='],
+    correctAnswer: 1
+  },
+  {
+    question: 'A named element in a JavaScript program that is used to store and retrieve data is a _____.',
+    answer: ['Method', 'assignment operator', 'Variable', 'string'],
+    correctAnswer: 2
+  },
+  {
+    question: 'How do you call a function named "myFunction"?',
+    answer: ['call myFunction()', 'myFunction()', 'call function myFunction', 'Call.myFunction()'],
+    correctAnswer: 1
+  },
 
 ]
 
@@ -161,8 +206,10 @@ function startGame() {
   renderQuestion();
 }
 
+// Start button to initiate the quiz/game .
 startBtn.addEventListener("click", startGame)
 
+// Countdown timer (var timeLeft set above to 60 seconds) 
 function countdown() {
   var timeInterval = setInterval(function () {
     if (timeLeft >= 1) {
@@ -176,6 +223,7 @@ function countdown() {
   }, 1000);
 }
 
+// Renders question and randomizes the list
 function renderQuestion() {
   questionArea.innerHTML = '';
   answerArea.innerHTML = '';
@@ -184,24 +232,27 @@ function renderQuestion() {
   var questionHeading = document.createElement('h2');
   questionHeading.textContent = questionObj.question;
   questionArea.append(questionHeading);
+  // Use splice to make sure previously answered questions aren't being repeated over and over again. Keeps the game fluid. 
+  questionsList.splice(randomNum, 1);
 
-  for(var i = 0; i < questionObj.answer.length; i++) {
+  for (var i = 0; i < questionObj.answer.length; i++) {
     var answerBtn = document.createElement("button");
     answerBtn.classList.add("answer-button");
     answerBtn.textContent = questionObj.answer[i];
-    answerBtn.addEventListener("click", function(event) {
+    answerBtn.addEventListener("click", function (event) {
       event.preventDefault();
-      
+
       var userAnswer = event.target.textContent
       var correctAnswer = questionObj.correctAnswer;
 
-      if(userAnswer === questionObj.answer[correctAnswer]) {
+      // if = +50pts for each question answered correctly, decrement w/ else = -10sec for each question answered incorrectly.
+      if (userAnswer === questionObj.answer[correctAnswer]) {
         SCORE += 50;
         gameScore.textContent = SCORE + " POINTS";
-        displayFeeback("Correct! Well done.");
+        displayFeedback("Correct! Well done.");
       } else {
         timeLeft -= 10;
-        displayFeeback("Incorrect! No bueno.");
+        displayFeedback("Incorrect! No bueño.");
       }
 
       renderQuestion();
@@ -210,32 +261,35 @@ function renderQuestion() {
   }
 }
 
-function displayFeeback(msg) {
+// Renders the temporary "Correct" & "Incorrect" messages as questions are answered
+function displayFeedback(msg) {
   feedbackEl.textContent = msg;
-  setTimeout(function() {
+  setTimeout(function () {
     feedbackEl.textContent = "";
   }, 2000);
 }
 
+// Renders final score at the end of game
 function endGame() {
   gameplaySection.style.display = "none";
   gameOverSection.style.display = "flex";
   endResult.textContent = "FINAL SCORE: " + SCORE;
   renderHighscores();
-
 }
 
+// Renders the highscores list and stores it in local storage
 function renderHighscores() {
   highscoreList.innerHTML = '';
   highscores = JSON.parse(localStorage.getItem("highscores")) || []
-  for(var i = 0; i < highscores.length; i++) {
+  for (var i = 0; i < highscores.length; i++) {
     var hsLi = document.createElement('li');
     hsLi.textContent = highscores[i].username + ' - ' + highscores[i].score;
     highscoreList.append(hsLi);
   }
 }
 
-highscoreSubmitBtn.addEventListener('click', function(event){
+// Button for submitting final score and inserting initials 
+highscoreSubmitBtn.addEventListener('click', function (event) {
   event.preventDefault();
   highscores = JSON.parse(localStorage.getItem("highscores")) || []
   var userInitials = initialsInput.value.toUpperCase();
@@ -249,4 +303,3 @@ highscoreSubmitBtn.addEventListener('click', function(event){
 });
 
 
-// morning task : go through and comment on each item.

@@ -84,16 +84,38 @@ background-color: var(--dark-color);
 transition: all 250ms ease;
 }
 
+#highscore-submit-btn {
+  display: flex;
+  padding: 14px 34px;
+  margin: 16px 16px 16px 20px;  
+  text-align: center;
+  cursor: pointer;
+  border: 4px solid var(--dark-color);
+  border-radius: 24px;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 20px;
+}
+
+#highscore-submit-btn:hover {
+  color: var(--light-color);
+  background-color: var(--dark-color);
+  transition: all 250ms ease;
+}
+
+
 .timer {
   font-size: 30px;
   padding: 25px;
   margin-right: 16px;
   margin-left: auto;
   color: var(--dark-color);
+  font-weight: bolder;
 }
 
 .home {
   display: static;
+  margin-bottom: 20px;
 }
 
 .home p {
@@ -107,21 +129,19 @@ transition: all 250ms ease;
   text-align: center;
 }
 
-.home {
-  margin-bottom: 20px;
-}
-
 .answers {
   width: 100%;
   display: flex;
   flex-direction: column;
-  
 }
 
 .answer-button {
   padding: 1rem;
   width: 100%;
   margin: 1rem 0;
+  font-size: 20px;
+  font-weight: bold;
+  position: static;
 }
 
 .answer-button:hover {
@@ -149,6 +169,33 @@ transition: all 250ms ease;
   color: var(--light-color);
   background-color: var(--dark-color);
   transition: all 250ms ease;
+}
+
+#game-score {
+  color: var(--dark-color);
+  display: flex;
+  padding: 1.0rem;
+}
+
+.questions {
+  display: flex;
+  position: relative;
+  padding: 1.0rem;
+  border: var(--dark-color);
+}
+
+input {
+  font-size: 16px;
+  border: 2px solid black;
+}
+
+label {
+  font-size: 1.0rem;
+}
+#feedback {
+  padding: 1.5rem;
+  position: sticky;
+  margin-top: 12px;
 }
 
 
