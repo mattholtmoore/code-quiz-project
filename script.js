@@ -1,25 +1,22 @@
+// Element declarations 
 var timerEl = document.getElementById('countdown');
-
-function countdown() {
-  var timeLeft = 60;
-
-
-  var timeInterval = setInterval(function () {
-    if (timeLeft > 1) {
-      timerEl.textContent = timeLeft + ' seconds remaining';
-      timeLeft--;
-    } else if (timeLeft === 1) {
-      timerEl.textContent = timeLeft + ' second remaining';
-      timeLeft--;
-    } else {
-      timerEl.textContent = '';
-      clearInterval(timeInterval);
-      displayMessage();
-    }
-  }, 1000);
-}
+var homePage = document.getElementById('home-page');
+var startBtn = document.getElementById('startButton');
+var gameplaySection = document.getElementById('gameplay-section');
+var questionArea = document.getElementById('questions');
+var answerArea = document.getElementById('answers');
+var gameScore = document.getElementById('game-score');
+var feedbackEl = document.getElementById('feedback');
+var gameOverSection = document.getElementById('gameover-section');
+var endResult = document.getElementById('endResult');
+var highscoreSubmitBtn = document.getElementById('highscore-submit-btn');
+var scoreForm = document.getElementById('score-form');
+var highscoresArea = document.getElementById('highscores');
+var highscoreList = document.getElementById('highscore-list');
+var initialsInput = document.getElementById('initials');
 
 
+// Variable declarations
 var questionsList = [
   {
     question: 'What does HTML stand for?',
@@ -154,42 +151,102 @@ var questionsList = [
 
 ]
 
+var SCORE = 0;
+var timeLeft = 60;
 
-// EXAMPLE/REFERENCE FROM CLASS:
-// var scoreForm = document.querySelector("#score-form");
-// var initialsEl = document.querySelector("#initials");
-// var tableEl = document.querySelector("#table");
+function startGame() {
+  homePage.style.display = "none";
+  gameplaySection.style.display = "flex";
+  countdown();
+  renderQuestion();
+}
 
-// var scores = JSON.parse(localStorage.getItem("scores")) || [];
+startBtn.addEventListener("click", startGame)
 
-// console.log(scores);
+function countdown() {
+  var timeInterval = setInterval(function () {
+    if (timeLeft >= 1) {
+      timerEl.textContent = "Timer: " + timeLeft;
+      timeLeft--;
+    } else {
+      timerEl.textContent = '';
+      clearInterval(timeInterval);
+      endGame();
+    }
+  }, 1000);
+}
 
-// if (scoreForm) {
-//   scoreForm.addEventListener("submit", function(event) {
-//     event.preventDefault();
-//     var randomScore = Math.floor(Math.random() * 100);
+function renderQuestion() {
+  questionArea.innerHTML = '';
+  answerArea.innerHTML = '';
+  var randomNum = Math.floor(Math.random() * questionsList.length);
+  var questionObj = questionsList[randomNum];
+  var questionHeading = document.createElement('h2');
+  questionHeading.textContent = questionObj.question;
+  questionArea.append(questionHeading);
 
-//     var score = {
-//       points: randomScore,
-//       initials: initialsEl.value.trim()
-//     }
+  for(var i = 0; i < questionObj.answer.length; i++) {
+    var answerBtn = document.createElement("button");
+    answerBtn.classList.add("answer-button");
+    answerBtn.textContent = questionObj.answer[i];
+    answerBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      
+      var userAnswer = event.target.textContent
+      var correctAnswer = questionObj.correctAnswer;
 
-//     scores.push(score);
+      if(userAnswer === questionObj.answer[correctAnswer]) {
+        SCORE += 50;
+        gameScore.textContent = SCORE + " POINTS";
+        displayFeeback("Correct! Well done.");
+      } else {
+        timeLeft -= 10;
+        displayFeeback("Incorrect! No bueno.");
+      }
 
-//     localStorage.setItem("scores", JSON.stringify(scores));
+      renderQuestion();
+    })
+    answerArea.append(answerBtn);
+  }
+}
 
-//     location.replace('index.html');
-//   });
-// }
+function displayFeeback(msg) {
+  feedbackEl.textContent = msg;
+  setTimeout(function() {
+    feedbackEl.textContent = "";
+  }, 2000);
+}
 
-// if (tableEl) {
-//   var newData = [...scores];
-//   newData.sort(function(a,b) {
-//     return  b.points - a.points;
-//   });
-//   for (var score of newData) {
-//     var element = document.createElement("div");
-//     element.textContent = score.initials + ": " + score.points;
-//     tableEl.appendChild(element);
-//   }
-// } 
+function endGame() {
+  gameplaySection.style.display = "none";
+  gameOverSection.style.display = "flex";
+  endResult.textContent = "FINAL SCORE: " + SCORE;
+  renderHighscores();
+
+}
+
+function renderHighscores() {
+  highscoreList.innerHTML = '';
+  highscores = JSON.parse(localStorage.getItem("highscores")) || []
+  for(var i = 0; i < highscores.length; i++) {
+    var hsLi = document.createElement('li');
+    hsLi.textContent = highscores[i].username + ' - ' + highscores[i].score;
+    highscoreList.append(hsLi);
+  }
+}
+
+highscoreSubmitBtn.addEventListener('click', function(event){
+  event.preventDefault();
+  highscores = JSON.parse(localStorage.getItem("highscores")) || []
+  var userInitials = initialsInput.value.toUpperCase();
+  var entry = {
+    username: userInitials,
+    score: SCORE
+  }
+  highscores.push(entry);
+  localStorage.setItem("highscores", JSON.stringify(highscores));
+  renderHighscores();
+});
+
+
+// morning task : go through and comment on each item.
