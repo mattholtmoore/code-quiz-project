@@ -14,7 +14,10 @@ var scoreForm = document.getElementById('score-form');
 var highscoresArea = document.getElementById('highscores');
 var highscoreList = document.getElementById('highscore-list');
 var initialsInput = document.getElementById('initials');
-
+var highscoreButton = document.getElementById('highscoreButton')
+var highscorePageList = document.getElementById('highscore-page-list')
+var highscoreBackButton = document.getElementById('highscore-back')
+var playAgain = document.getElementById('play-again')
 
 // Variable declarations and questions list. (Collapse questionsList for better visibility).
 var questionsList = [
@@ -161,7 +164,7 @@ var questionsList = [
   {
     question: 'In JavaScript, the expression x!=y returns false if:',
     answer: ['the variables are equal', 'x is less than y', 'the variables are not equal', 'None of the above'],
-    correctAnswer:  0
+    correctAnswer: 0
   },
   {
     question: 'In JavaScript, which of the following is a logical operator?',
@@ -198,6 +201,8 @@ var questionsList = [
 
 var SCORE = 0;
 var timeLeft = 60;
+var highscores = JSON.parse(localStorage.getItem("highscores")) || []
+
 
 function startGame() {
   homePage.style.display = "none";
@@ -241,6 +246,7 @@ function renderQuestion() {
     answerBtn.textContent = questionObj.answer[i];
     answerBtn.addEventListener("click", function (event) {
       event.preventDefault();
+      questionsList.splice(randomNum, 1);
 
       var userAnswer = event.target.textContent
       var correctAnswer = questionObj.correctAnswer;
@@ -263,9 +269,9 @@ function renderQuestion() {
 
 // Renders the temporary feedback ("Correct" & "Incorrect") messages as questions are answered
 function displayFeedback(msg) {
-  feedbackEl.textContent = msg;
+  feedbackEl.innerHTML = "<hr><br>" + msg;
   setTimeout(function () {
-    feedbackEl.textContent = "";
+    feedbackEl.innerHTML = "";
   }, 2000);
 }
 
@@ -280,10 +286,12 @@ function endGame() {
 // Renders the highscores list and stores it in local storage
 function renderHighscores() {
   highscoreList.innerHTML = '';
-  highscores = JSON.parse(localStorage.getItem("highscores")) || []
-  for (var i = 0; i < highscores.length; i++) {
+  var sortedHs = highscores.sort(function (a, b) {
+    return b.score - a.score
+  })
+  for (var i = 0; i < sortedHs.length; i++) {
     var hsLi = document.createElement('li');
-    hsLi.textContent = highscores[i].username + ' - ' + highscores[i].score;
+    hsLi.textContent = sortedHs[i].username + ' - ' + sortedHs[i].score;
     highscoreList.append(hsLi);
   }
 }
@@ -291,7 +299,6 @@ function renderHighscores() {
 // Submit Button for submitting final score and inserting initials 
 highscoreSubmitBtn.addEventListener('click', function (event) {
   event.preventDefault();
-  highscores = JSON.parse(localStorage.getItem("highscores")) || []
   var userInitials = initialsInput.value.toUpperCase();
   var entry = {
     username: userInitials,
@@ -302,4 +309,41 @@ highscoreSubmitBtn.addEventListener('click', function (event) {
   renderHighscores();
 });
 
+// User can click View High Scores Button to solely see the highest scores
+function renderHighscorePage() {
+  homePage.style.display = 'none';
+  gameplaySection.style.display = 'none';
+  gameOverSection.style.display = 'none';
+  highscoresArea.style.display = 'flex';
+  highscorePageList.innerHTML = '';
+  var sortedHs = highscores.sort(function (a, b) {
+    return b.score - a.score
+  })
+  for (var i = 0; i < sortedHs.length; i++) {
+    var highscoreLi = document.createElement('li');
+    highscoreLi.textContent = sortedHs[i].username + ' - ' + sortedHs[i].score;
+    highscorePageList.append(highscoreLi);
+  }
+}
 
+highscoreBackButton.addEventListener('click', function (event) {
+  event.preventDefault();
+  homePage.style.display = 'block';
+  highscoresArea.style.display = 'none';
+})
+
+highscoreButton.addEventListener('click', renderHighscorePage)
+
+
+var backupQuestions = questionsList;
+
+playAgain.addEventListener('click', () => {
+  gameOverSection.style.display = 'none';
+  questionsList = [];
+  for (let i = 0; i < backupQuestions.length; i++) {
+    questionsList.push(backupQuestions[i]);
+  }
+  SCORE = 0;
+  timeLeft = 60;
+  startGame()
+})

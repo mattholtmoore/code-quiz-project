@@ -103,6 +103,9 @@ transition: all 250ms ease;
   transition: all 250ms ease;
 }
 
+#highscores {
+  display: none;
+}
 
 .timer {
   font-size: 30px;
