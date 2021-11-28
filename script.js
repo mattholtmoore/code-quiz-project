@@ -202,6 +202,8 @@ var questionsList = [
 var SCORE = 0;
 var timeLeft = 60;
 var highscores = JSON.parse(localStorage.getItem("highscores")) || []
+var backupQuestions = questionsList;
+
 
 function startGame() {
   homePage.style.display = "none";
@@ -215,6 +217,7 @@ startBtn.addEventListener("click", startGame)
 
 // Countdown timer (var timeLeft set above to 60 seconds) 
 function countdown() {
+  highscoreButton.style.display = 'none';
   var timeInterval = setInterval(function () {
     if (timeLeft >= 1) {
       timerEl.textContent = "Timer: " + timeLeft;
@@ -231,11 +234,17 @@ function countdown() {
 function renderQuestion() {
   questionArea.innerHTML = '';
   answerArea.innerHTML = '';
+  if (questionsList.length === 0) {
+    endGame();
+    return;
+  }
+
   var randomNum = Math.floor(Math.random() * questionsList.length);
   var questionObj = questionsList[randomNum];
   var questionHeading = document.createElement('h2');
   questionHeading.textContent = questionObj.question;
   questionArea.append(questionHeading);
+
   // Use splice to make sure previously answered questions aren't being repeated over and over again. Keeps the game fluid. 
   questionsList.splice(randomNum, 1);
 
@@ -245,7 +254,6 @@ function renderQuestion() {
     answerBtn.textContent = questionObj.answer[i];
     answerBtn.addEventListener("click", function (event) {
       event.preventDefault();
-      questionsList.splice(randomNum, 1);
 
       var userAnswer = event.target.textContent
       var correctAnswer = questionObj.correctAnswer;
@@ -270,12 +278,13 @@ function renderQuestion() {
 function displayFeedback(msg) {
   feedbackEl.innerHTML = "<hr><br>" + msg;
   setTimeout(function () {
-    feedbackEl.innerHTML = "";
+    feedbackEl.innerHTML = " ";
   }, 2000);
 }
 
 // Renders final score at the end of game
 function endGame() {
+  highscoreButton.style.display = 'flex';
   gameplaySection.style.display = "none";
   gameOverSection.style.display = "flex";
   endResult.textContent = "FINAL SCORE: " + SCORE;
@@ -286,9 +295,9 @@ function endGame() {
 function renderHighscores() {
   highscoreList.innerHTML = '';
   var sortedHs = highscores.sort(function (a, b) {
-    return b.score - a.score
+    return b.score - a.score;
   })
-  for (var i = 0; i < sortedHs.length; i++) {
+  for (var i = 0; i < 1; i++) {
     var hsLi = document.createElement('li');
     hsLi.textContent = sortedHs[i].username + ' - ' + sortedHs[i].score;
     highscoreList.append(hsLi);
@@ -306,7 +315,7 @@ highscoreSubmitBtn.addEventListener('click', function (event) {
   highscores.push(entry);
   localStorage.setItem("highscores", JSON.stringify(highscores));
   renderHighscores();
-});
+})
 
 // User can click View High Scores Button to solely see the highest scores
 function renderHighscorePage() {
@@ -316,15 +325,16 @@ function renderHighscorePage() {
   highscoresArea.style.display = 'flex';
   highscorePageList.innerHTML = '';
   var sortedHs = highscores.sort(function (a, b) {
-    return b.score - a.score
+    return b.score - a.score;
   })
-  for (var i = 0; i < sortedHs.length; i++) {
+  for (var i = 0; i < 5; i++) {
     var highscoreLi = document.createElement('li');
     highscoreLi.textContent = sortedHs[i].username + ' - ' + sortedHs[i].score;
     highscorePageList.append(highscoreLi);
   }
 }
 
+// Button to go back to welcome/start screen
 highscoreBackButton.addEventListener('click', function (event) {
   event.preventDefault();
   homePage.style.display = 'block';
@@ -333,16 +343,14 @@ highscoreBackButton.addEventListener('click', function (event) {
 
 highscoreButton.addEventListener('click', renderHighscorePage)
 
-
-var backupQuestions = questionsList;
-
+// Option to play again button. Immediately sets you in question mode and the timer begins counting down again. Points 0 out.
 playAgain.addEventListener('click', () => {
   gameOverSection.style.display = 'none';
   questionsList = [];
-  for (let i = 0; i < backupQuestions.length; i++) {
+  for (var i = 0; i < backupQuestions.length; i++) {
     questionsList.push(backupQuestions[i]);
   }
   SCORE = 0;
   timeLeft = 60;
-  startGame()
+  startGame();
 })
