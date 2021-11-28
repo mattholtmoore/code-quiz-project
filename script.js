@@ -333,6 +333,7 @@ highscoreBackButton.addEventListener('click', function (event) {
 
 highscoreButton.addEventListener('click', renderHighscorePage)
 
+
 var backupQuestions = questionsList;
 
 playAgain.addEventListener('click', () => {
