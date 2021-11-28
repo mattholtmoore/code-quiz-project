@@ -203,7 +203,6 @@ var SCORE = 0;
 var timeLeft = 60;
 var highscores = JSON.parse(localStorage.getItem("highscores")) || []
 
-
 function startGame() {
   homePage.style.display = "none";
   gameplaySection.style.display = "flex";
@@ -333,7 +332,6 @@ highscoreBackButton.addEventListener('click', function (event) {
 })
 
 highscoreButton.addEventListener('click', renderHighscorePage)
-
 
 var backupQuestions = questionsList;
 

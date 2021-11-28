@@ -22,3 +22,6 @@ _________________________________________________
 
 [] TOMORROW: Complete the comments in my JS file. 
 <!-- Make it simple and succinct. -->
+
+[] TOMORROW: Had an accidental commit take place. Not really sure how to fix it at the moment. 
+<!-- Make sure commit hasn't derailed my progress so far. -->
