@@ -261,7 +261,7 @@ function renderQuestion() {
   }
 }
 
-// Renders the temporary "Correct" & "Incorrect" messages as questions are answered
+// Renders the temporary feedback ("Correct" & "Incorrect") messages as questions are answered
 function displayFeedback(msg) {
   feedbackEl.textContent = msg;
   setTimeout(function () {
@@ -288,7 +288,7 @@ function renderHighscores() {
   }
 }
 
-// Button for submitting final score and inserting initials 
+// Submit Button for submitting final score and inserting initials 
 highscoreSubmitBtn.addEventListener('click', function (event) {
   event.preventDefault();
   highscores = JSON.parse(localStorage.getItem("highscores")) || []
