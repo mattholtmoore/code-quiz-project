@@ -64,10 +64,6 @@ a {
   color: black;
 }
 
-h2 {
-  padding: 1.5rem;
-}
-
 .highscoreBtn {
   font-size: 20px;
   font-weight: bold;
@@ -228,10 +224,10 @@ transition: all 250ms ease;
   color: var(--dark-color);
   display: flex;
   padding: 1.0rem;
-  margin-top: 20%;
+  margin-top: 10%;
 }
 
-.questions {
+.questions h2 {
   display: flex;
   position: relative;
   padding: 1.0rem;

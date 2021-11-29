@@ -297,7 +297,7 @@ function renderHighscores() {
   var sortedHs = highscores.sort(function (a, b) {
     return b.score - a.score;
   })
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < sortedHs.length; i++) {
     var hsLi = document.createElement('li');
     hsLi.textContent = sortedHs[i].username + ' - ' + sortedHs[i].score;
     highscoreList.append(hsLi);
@@ -327,7 +327,7 @@ function renderHighscorePage() {
   var sortedHs = highscores.sort(function (a, b) {
     return b.score - a.score;
   })
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < sortedHs.length; i++) {
     var highscoreLi = document.createElement('li');
     highscoreLi.textContent = sortedHs[i].username + ' - ' + sortedHs[i].score;
     highscorePageList.append(highscoreLi);
@@ -352,5 +352,7 @@ playAgain.addEventListener('click', () => {
   }
   SCORE = 0;
   timeLeft = 60;
+  gameScore.textContent = SCORE + " POINTS";
+
   startGame();
 })
