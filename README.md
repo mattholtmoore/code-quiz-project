@@ -25,6 +25,9 @@ When they click the start button, a timer starts and they are presented with a q
 ***
 
 ## Visuals
-![codequiz](*insert image* "code quiz")
+![codequiz](./assets/images/welcomepage.png "welcomepage")
+![codequiz](./assets/images/gameplay.png "gameplay")
+![codequiz](./assets/images/endgame.png "endgame")
+![codequiz](./assets/images/highscores.png "highscores")
 
  

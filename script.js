@@ -297,7 +297,7 @@ function renderHighscores() {
   var sortedHs = highscores.sort(function (a, b) {
     return b.score - a.score;
   })
-  for (var i = 0; i < 1; i++) {
+  for (var i = 0; i < 5; i++) {
     var hsLi = document.createElement('li');
     hsLi.textContent = sortedHs[i].username + ' - ' + sortedHs[i].score;
     highscoreList.append(hsLi);
